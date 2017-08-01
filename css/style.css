@@ -54,7 +54,6 @@ div.tab button {
     background-color: inherit;
     color: black;
     padding: 22px 16px;
-    width: 100%;
     border: none;
     outline: none;
     text-align: left;
@@ -80,4 +79,9 @@ div.tab button.active {
     width: 70%;
     border-left: none;
     height: 300px;
+}
+div.tab button.subtablinks {
+	
+	background-color: ghostwhite;
+	
 }
