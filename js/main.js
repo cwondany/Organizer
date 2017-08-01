@@ -7,8 +7,8 @@ const tabHeading = document.createElement("H5");
 tabHeading.innerHTML = "Aufgaben";
 
 
-function addMenu() {
 
+function addMenu() {
 
     if (document.getElementById('taskTitle').value === "") {
         alert("Die Eingabe ist nicht vollstaendig! Bitte versuchen Sie es erneut.");
@@ -20,21 +20,26 @@ function addMenu() {
     }
 
     if (counterForLinks == 0) {
-
         tabWrapper.className = "tab";
         document.body.appendChild(tabWrapper);
         tabWrapper.appendChild(tabHeading);
-
     }
+	
+	counterForLinks++;
+
     const menuBtn = document.createElement("BUTTON");
     menuBtn.className = "tablinks";
     menuBtn.id = "task" + counterForLinks;
+	menuBtn.marginTop= numOfSubmenus;
     menuBtn.innerHTML = "" + document.getElementById("taskTitle").value;
     tabWrapper.appendChild(menuBtn);
-    counterForLinks++;
+	 
+	const menuWrapper  = document.createElement("DIV");
+	menuWrapper.id = "m" + counterForLinks;
+	tabWrapper.appendChild(menuWrapper);
 
     //const addSubmenuBtn2 = document.createElement("BUTTON");
-    //addSubmenuBtn2.id = (counterForLinks);
+    //addSubmenuBtn2.id = ("subtab")+ counterForLinks;
     //addSubmenuBtn2.innerHTML = "-";
     //menu.appendChild(addSubmenuBtn2);
 
@@ -53,17 +58,28 @@ function addMenu() {
     tabContentWrapper.appendChild(description);
 
 
+	menuBtn.addEventListener("mousedown", function mouseDown(e) {
+		e = e || window.event;
+		switch (e.which) {
+			case 1: createTask(event, tabContentWrapper.id); break;
+			case 3: alert('right'); addSubmenu(menuWrapper.id); break; 
+		}
+	});
+	
     //  Add event handler
-    menuBtn.addEventListener("click", function (event) {
-        createTask(event, "t" + counterForLinks);
-    });
-
+    //menuBtn.addEventListener("click", function (event) {
+    //  createTask(event, "t" + counterForLinks);
+    //});
+    // menuBtn.addEventListener("click", function () {
+      //   toggleSubmenu();
+     //});
     // addSubmenuBtn2.addEventListener("click", function () {
     //     toggleSubmenu(addSubmenuBtn2.id);
     // });
 
     clearText();
 }
+
 
 function toggleSubmenu(clickedId) {
     var x = document.getElementById('item' + clickedId);
@@ -75,38 +91,13 @@ function toggleSubmenu(clickedId) {
 }
 
 function addSubmenu(clickedId) {
-
-    //    //alert(clickedId);
-    //    numOfSubmenus += 5;
-    //    var item = document.getElementById('item'+clickedId  );
-    //
-    //    var input = document.createElement('input'),      
-    //    div = document.createElement('div');
-    //    input.type = "text";
-    //    input.setAttribute("name", "item[]");
-    //    input.setAttribute("class", "item");
-    //
-    //    
-    //    div.appendChild(input);
-    //    item.appendChild(div);
-
-
-    numOfSubmenus += 5;
-    var item = document.getElementById('item' + clickedId);
-
-    var subLinkElement = document.createElement('A'),
-        subDiv = document.createElement('div');
-    subDiv.className = "subNav";
-
-    subLinkElement.id = "menuID" + clickedId + clickedId;
-    subLinkElement.setAttribute("href", "/html" + clickedId + clickedId);
-
-    const menuName = document.createTextNode("SUB-HTML ");
-    subLinkElement.appendChild(menuName);
-    subDiv.appendChild(subLinkElement);
-    item.appendChild(subDiv);
-
-
+	
+	var item = document.getElementById(clickedId);
+    const subMenuBtn = document.createElement("BUTTON");
+    subMenuBtn.className = "subtablinks";
+    subMenuBtn.id = "subtask" + counterForLinks;
+    subMenuBtn.innerHTML = "sub" + document.getElementById("taskTitle").value;
+    item.appendChild(subMenuBtn);
 }
 
 function clearText() {
@@ -134,9 +125,4 @@ function createTask(event, taskId) {
     document.getElementById(taskId).style.display = "block";
     event.currentTarget.className += " active";
 
-
-
 }
-
-
-
