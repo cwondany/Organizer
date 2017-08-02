@@ -1,11 +1,8 @@
-var counterForLinks = 0;
-var numOfSubmenus = 0;
-
+var menuCounter = 0;
 
 const tabWrapper = document.createElement("DIV");
 const tabHeading = document.createElement("H5");
 tabHeading.innerHTML = "Aufgaben";
-
 
 
 function addMenu() {
@@ -19,88 +16,111 @@ function addMenu() {
         return;
     }
 
-    if (counterForLinks == 0) {
+    if (menuCounter == 0) {
         tabWrapper.className = "tab";
         document.body.appendChild(tabWrapper);
         tabWrapper.appendChild(tabHeading);
     }
-	
-	counterForLinks++;
+
+    menuCounter++;
+
 
     const menuBtn = document.createElement("BUTTON");
     menuBtn.className = "tablinks";
-    menuBtn.id = "task" + counterForLinks;
-	menuBtn.marginTop= numOfSubmenus;
-    menuBtn.innerHTML = "" + document.getElementById("taskTitle").value;
+    menuBtn.id = "task" + menuCounter;
+    menuBtn.innerHTML = "" + document.getElementById("taskTitle").value + ".......";
     tabWrapper.appendChild(menuBtn);
-	 
-	const menuWrapper  = document.createElement("DIV");
-	menuWrapper.id = "m" + counterForLinks;
-	tabWrapper.appendChild(menuWrapper);
 
-    //const addSubmenuBtn2 = document.createElement("BUTTON");
-    //addSubmenuBtn2.id = ("subtab")+ counterForLinks;
-    //addSubmenuBtn2.innerHTML = "-";
-    //menu.appendChild(addSubmenuBtn2);
+    var deleteX = document.createElement("SPAN");
+    var txtX = document.createTextNode("\u00D7");
+    deleteX.className = "close";
+    deleteX.appendChild(txtX);
+    menuBtn.appendChild(deleteX);
+
+    const menuWrapper = document.createElement("DIV");
+    menuWrapper.id = "m" + menuCounter;
+    tabWrapper.appendChild(menuWrapper);
 
     const tabContentWrapper = document.createElement("DIV");
-    tabContentWrapper.id = "t" + counterForLinks;
+    tabContentWrapper.id = "t" + menuCounter;
     tabContentWrapper.className = "tabcontent";
     document.body.appendChild(tabContentWrapper);
 
-    const title = document.createElement("H3");
-    title.innerHTML = "" + document.getElementById("taskTitle").value;
-    tabContentWrapper.appendChild(title);
+    const tabContentTitle = document.createElement("H3");
+    tabContentTitle.innerHTML = "" + document.getElementById("taskTitle").value;
+    tabContentWrapper.appendChild(tabContentTitle);
 
-    const description = document.createElement("P");
-    description.innerHTML = "" + document.getElementById("taskDescription").value;
+    const taskDescription = document.createElement("P");
+    taskDescription.innerHTML = "" + document.getElementById("taskDescription").value;
     tabContentWrapper.style.display = "none";
-    tabContentWrapper.appendChild(description);
+    tabContentWrapper.appendChild(taskDescription);
 
 
-	menuBtn.addEventListener("mousedown", function mouseDown(e) {
-		e = e || window.event;
-		switch (e.which) {
-			case 1: createTask(event, tabContentWrapper.id); break;
-			case 3: alert('right'); addSubmenu(menuWrapper.id); break; 
-		}
-	});
-	
+    menuBtn.addEventListener("mousedown", function mouseDown(e) {
+        e = e || window.event;
+        switch (e.which) {
+            case 1:
+                createTask(event, tabContentWrapper.id);
+                break;
+            case 3:
+                alert('right');
+                addSubmenu(menuWrapper.id);
+                break;
+        }
+    });
+
     //  Add event handler
-    //menuBtn.addEventListener("click", function (event) {
-    //  createTask(event, "t" + counterForLinks);
-    //});
     // menuBtn.addEventListener("click", function () {
-      //   toggleSubmenu();
-     //});
-    // addSubmenuBtn2.addEventListener("click", function () {
-    //     toggleSubmenu(addSubmenuBtn2.id);
-    // });
+    //   toggleDiv();
+    //});
 
-    clearText();
+    var closeSpan = document.getElementsByClassName("close");
+    var i;
+    for (i = 0; i < closeSpan.length; i++) {
+
+        // Gelöscht wird immer das letzte Element:
+        closeSpan[i].onclick = function () {
+            var a = document.getElementById(menuBtn.id);
+            a.style.display = "none";
+            tabContentWrapper.style.display = "none";
+
+            var b = document.getElementById(menuWrapper.id);
+            b.style.display = "none";
+        }
+    }
+
+    clearInputTags();
 }
 
+function deleteDiv(clickedId) {
+    var a = document.getElementById(menuBtn.id);
+    a.style.display = "none";
+    tabContentWrapper.style.display = "none";
 
-function toggleSubmenu(clickedId) {
-    var x = document.getElementById('item' + clickedId);
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
+    var b = document.getElementById(menuWrapper.id);
+    b.style.display = "none";
+}
+
+function toggleDiv(clickedId) {
+    var divToFade = document.getElementById('item' + clickedId);
+    if (divToFade.style.display === 'none') {
+        divToFade.style.display = 'block';
     } else {
-        x.style.display = 'none';
+        divToFade.style.display = 'none';
     }
 }
 
 function addSubmenu(clickedId) {
-	
-	var item = document.getElementById(clickedId);
+
+    var subMenu = document.getElementById(clickedId);
     const subMenuBtn = document.createElement("BUTTON");
     subMenuBtn.className = "subtablinks";
-    subMenuBtn.id = "subtask" + counterForLinks;
+    subMenuBtn.id = "subtask" + menuCounter;
     subMenuBtn.innerHTML = "sub" + document.getElementById("taskTitle").value;
-    item.appendChild(subMenuBtn);
+    subMenu.appendChild(subMenuBtn);
 }
 
-function clearText() {
+function clearInputTags() {
     document.getElementById('taskTitle').value = "";
     document.getElementById('taskDescription').value = "";
 }
