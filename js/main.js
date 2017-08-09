@@ -44,8 +44,17 @@ function addMenu() {
     const tabContentWrapper = document.createElement("DIV");
     tabContentWrapper.id = "t" + menuCounter;
     tabContentWrapper.className = "tabcontent";
+	tabContentWrapper.contentEditable="true";
     document.body.appendChild(tabContentWrapper);
 
+	if (menuCounter == 1) {
+	const textBar = document.createElement("DIV");
+    textBar.id = "textBar";
+	textBar.style.display ="none";
+    tabContentWrapper.appendChild(textBar);
+	createEditorBar();
+	
+	}
     const tabContentTitle = document.createElement("H3");
     tabContentTitle.innerHTML = "" + document.getElementById("taskTitle").value;
     tabContentWrapper.appendChild(tabContentTitle);
@@ -55,6 +64,10 @@ function addMenu() {
     tabContentWrapper.style.display = "none";
     tabContentWrapper.appendChild(taskDescription);
 
+	
+    tabContentWrapper.addEventListener("mouseOut", function mouseOut() {
+		this.contentEditable = false;
+		 });
 
     menuBtn.addEventListener("mousedown", function mouseDown(e) {
         e = e || window.event;
@@ -144,5 +157,23 @@ function createTask(event, taskId) {
     // Show the current tab, and add an "active" class to the link that opened the tab
     document.getElementById(taskId).style.display = "block";
     event.currentTarget.className += " active";
+	textBar.style.display ="block";
+}
 
+function createEditorBar() {
+    const barBtn = document.createElement("BUTTON");
+    barBtn.className = "btn-group";
+	barBtn.innerHTML = "B";
+	
+	const barBtn2 = document.createElement("BUTTON");
+    barBtn2.className = "btn-group";
+	barBtn2.innerHTML = "U";
+	
+	const barBtn3 = document.createElement("BUTTON");
+    barBtn3.className = "btn-group";
+	barBtn3.innerHTML = "I";
+	
+	textBar.appendChild(barBtn);
+	textBar.appendChild(barBtn2);
+	textBar.appendChild(barBtn3);
 }
