@@ -51,6 +51,7 @@ function addMenu() {
 	const textBar = document.createElement("DIV");
     textBar.id = "textBar";
 	textBar.style.display ="none";
+	textBar.contentEditable="false";
     tabContentWrapper.appendChild(textBar);
 	createEditorBar();
 	
@@ -173,7 +174,25 @@ function createEditorBar() {
     barBtn3.className = "btn-group";
 	barBtn3.innerHTML = "I";
 	
+	const img = document.createElement("BUTTON");
+    img.className = "btn-group";
+	img.innerHTML = "IMG";
+	
 	textBar.appendChild(barBtn);
 	textBar.appendChild(barBtn2);
 	textBar.appendChild(barBtn3);
+	//textBar.appendChild(img);
+	
+	 barBtn.onclick = function makeBold() {
+	 document.execCommand('bold',false,null);
+	 }
+	 barBtn2.onclick = function makeUnderline() {
+     document.execCommand ('underline', false, null);
+     }
+	 barBtn3.onclick = function makeItalic() {
+     document.execCommand ('italic', false, null);
+     } 
+	 img.onclick = function addImage() {
+     document.execCommand("insertImage", false, imageUrl);
+     }
 }

@@ -81,7 +81,21 @@ div.tab button.active {
     height: 300px;
 }
 div.tab button.subtablinks {
-	
 	background-color: ghostwhite;
+}
+
+/*------------------------------------------------EDITOR: textBar---------------------------------------------------------------*/
+#textBar {
+	background-color: ghostwhite;
+	}
 	
+.btn-group{
+	border: 1px solid transparent; 
+	border-radius: 4px; 
+	border-color: #ccc; 
+	padding: 6px 12px; 
+	margin: 2px;color: #333; 
+	background-color: #fff; 
+	font-size: 12px; 
+	text-align: center;	
 }
